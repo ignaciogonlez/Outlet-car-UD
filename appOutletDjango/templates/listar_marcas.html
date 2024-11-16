@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lista de Marcas</title>
+</head>
+<body>
+    <h1>Lista de Marcas</h1>
+    <ul>
+        {% for marca in marcas %}
+            <li>
+                <li>{{ marca.nombre }}</li>
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="/">Volver al inicio</a>
+</body>
+</html>
