@@ -45,7 +45,7 @@ def listar_ofertasCoche(request):
 
     # Devolver el contenido como respuesta
     #return HttpResponse(contenido)
-    #Asi ya esta bien
+    #Asi ya esta bien  la conexion con el html del index
     context = {
         'ofertasCoche': ofertasCoche
     }
