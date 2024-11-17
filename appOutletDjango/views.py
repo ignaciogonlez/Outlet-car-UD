@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Categoria, Marca, Coche
-from django.shortcuts import render, get_object_or_404
+from .models import Categoria, Marca, Coche, OfertaCoche
+from django.shortcuts import get_object_or_404
 
 
 from django.http import HttpResponse
@@ -20,9 +20,58 @@ def index(request):
     )
 
 def listar_marcas(request):
-    marcas = Marca.objects.all()  # Obtenemos todas las marcas
-    context = {'marcas': marcas}
-    return render(request, 'appOutletDjango/listar_marcas.html', context)
+    # Obtener todas las marcas
+    marcas = Marca.objects.all()
+
+    # Generar el contenido dinámico con un for
+    contenido = "<h1>Lista de Marcas</h1><ul>"
+    for marca in marcas:
+        contenido += f"<li>Detalles de la marca: {marca.nombre}</li>"
+    contenido += "</ul>"
+
+    # Devolver el contenido como respuesta
+    return HttpResponse(contenido)
+
+def listar_ofertasCoche(request):
+    # Obtener todas las marcas
+    ofertasCoche = OfertaCoche.objects.all()
+
+    # Generar el contenido dinámico con un for
+    contenido = "<h1>Lista de ofertasCoche</h1><ul>"
+    for ofertaCoche in ofertasCoche:
+        contenido += f"<li>Detalles de la oferta de coche: {ofertaCoche.coche}, {ofertaCoche.precio}, {ofertaCoche.descuento}, {ofertaCoche.disponible}, {ofertaCoche.destacada}</li>"
+    contenido += "</ul>"
+
+    # Devolver el contenido como respuesta
+    return HttpResponse(contenido)
+
+
+def listar_coches(request):
+    # Obtener todas las marcas
+    coches = Coche.objects.all()
+
+    # Generar el contenido dinámico con un for
+    contenido = "<h1>Lista de coches</h1><ul>"
+    for coche in coches:
+        contenido += f"<li>Detalles del coche: {coche.marca}, {coche.modelo}, {coche.anio}, {coche.kilometraje}, {coche.categorias}</li>"
+    contenido += "</ul>"
+
+    # Devolver el contenido como respuesta
+    return HttpResponse(contenido)
+
+
+def listar_categorias(request):
+    # Obtener todas las marcas
+    categorias = Categoria.objects.all()
+
+    # Generar el contenido dinámico con un for
+    contenido = "<h1>Lista de Categorias</h1><ul>"
+    for categoria in categorias:
+        contenido += f"<li>Detalles de la categoria: {categoria.nombre}</li>"
+    contenido += "</ul>"
+
+    # Devolver el contenido como respuesta
+    return HttpResponse(contenido)
 
 #devuelve el listado de categorias
 def index_categorias(request):
@@ -33,8 +82,7 @@ def index_categorias(request):
 #devuelve los datos de una categoria
 def show_categoria(request, categoria_id):
 	categoria = Categoria.objects.get(pk=categoria_id)
-	output = f'Detalles de la categoria: {categoria.id}, {categoria.nombre}, {categoria.target}'
-	return HttpResponse(output)
+	return HttpResponse(f"Detalles de la categoria: {categoria.nombre}")
 
 #devuelve los coches de una categorias
 def index_coches(request, categoria_id):
@@ -45,8 +93,14 @@ def index_coches(request, categoria_id):
 #devuelve los detalles de un coche
 def show_coche(request, coche_id):
 	coche = Coche.objects.get(pk=coche_id)
-	output = f'Detalles del coche: {coche.id}, {coche.nombre}, {coche.fecha_matriculacion}, {coche.kilometros}, {str(coche.categoria)}. Marcas: {[m.nombre for m in coche.marcas.all()]}'
-	return HttpResponse(output)
+	return HttpResponse(f"Detalles del coche: {coche.marca}, {coche.modelo}, {coche.anio}, {coche.kilometraje}, {coche.categorias}")
+
+
+def show_ofertaCoche(request, ofertaCoche_id):
+	ofertaCoche = OfertaCoche.objects.get(pk=ofertaCoche_id)
+	return HttpResponse(f"Detalles de la oferta de coche: {ofertaCoche.coche}, {ofertaCoche.precio}, {ofertaCoche.descuento}, {ofertaCoche.disponible}, {ofertaCoche.destacada}")
+
+
 
 #devuelve los detalles de una marca
 def show_marca(request, marca_id):
