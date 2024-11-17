@@ -26,7 +26,11 @@ class Coche(models.Model):
     kilometraje = models.IntegerField()  # Kilometraje del coche
     color = models.CharField(max_length=50)  # Color del coche
     combustible = models.CharField(max_length=50)  # Tipo de combustible (ej.: gasolina, diésel, eléctrico)
-    categorias = models.ManyToManyField(Categoria, related_name='coches')  # Categorías en las que el coche está clasificado
+    categoria = models.ForeignKey(
+        Categoria, 
+        on_delete=models.CASCADE, 
+        default=5  # Usa el ID de la categoría existente
+    )
 
     def __str__(self):
         return f"{self.marca.nombre} {self.modelo} ({self.anio})"
