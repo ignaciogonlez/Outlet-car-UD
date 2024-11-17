@@ -11,5 +11,6 @@ urlpatterns = [
     path('coches/<int:coche_id>/', views.show_coche, name='show_coche'),  # Detalles de una marca
     path('ofertasCoche/', views.listar_ofertasCoche, name='listar_ofertasCoche'),  # Ruta para listar marcas
     path('ofertasCoche/<int:ofertaCoche_id>/', views.show_ofertaCoche, name='show_ofertaCoche'),  # Detalles de una marca
+    path('ofertasDestacadas/', views.listar_ofertas_destacadas, name='listar_ofertas_destacadas'), #Ruta para listar ofertas destacadas
 
 ]

@@ -33,20 +33,18 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ oferta.coche.marca.nombre }} {{ oferta.coche.modelo }} ({{ oferta.coche.anio }})</h5>
                             <p class="card-text">
-                                Precio: {{ oferta.precio }} €<br>
+                                <strong>Precio:</strong> {{ oferta.precio }} €<br>
                                 {% if oferta.descuento %}
-                                    Descuento: {{ oferta.descuento }} %<br>
+                                    <strong>Descuento:</strong> {{ oferta.descuento }} %<br>
                                 {% endif %}
-                                Kilometraje: {{ oferta.coche.kilometraje }} km<br>
-                                Color: {{ oferta.coche.color }}<br>
-                                Combustible: {{ oferta.coche.combustible }}<br>
-                                Disponible: {{ oferta.disponible|yesno:"Sí,No" }}<br>
-                                Destacada: {{ oferta.destacada|yesno:"Sí,No" }}
+                                <strong>Disponible:</strong> {{ oferta.disponible|yesno:"Sí,No" }}<br>
                             </p>
                             <a href="{% url 'show_ofertaCoche' oferta.id %}" class="btn btn-primary">Ver Detalles</a>
                         </div>
                     </div>
                 </div>
+            {% empty %}
+            <p class="text-center">No hay ofertas disponibles en este momento.</p>
             {% endfor %}
         </div>
     </div>

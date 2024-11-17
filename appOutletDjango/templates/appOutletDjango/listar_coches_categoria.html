@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Outlet Car - Inicio</title>
+    <title>Coches en la Categoría {{ categoria.nombre }} - Outlet Car</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'appOutletDjango/style.css' %}">
@@ -34,43 +34,29 @@
         </div>
     </nav>
 
-    <!-- Sección de Encabezado Principal -->
-    <header class="jumbotron text-center mt-4">
-        <h1 class="display-4">Bienvenido a Outlet de Coches</h1>
-        <p class="lead">¡Encuentra las mejores ofertas de coches usados, de las mejores marcas y diferentes categorías!
-        </p>
-        <hr class="my-4">
-        <p>Visita nuestras secciones para conocer más sobre nuestras ofertas de coches, marcas y categorías.</p>
-        <a class="btn btn-primary btn-lg" href="{% url 'listar_ofertas_destacadas' %}" role="button">Ver Ofertas Destacadas</a>
-    </header>
-
-    <!-- Sección de Información General -->
+    <!-- Sección de Coches en la Categoría -->
     <div class="container my-5">
+        <h1 class="text-center text-primary mb-4">Coches en la Categoría: {{ categoria.nombre }}</h1>
         <div class="row">
-            <div class="col-md-6">
-                <h2>Marcas de Coches</h2>
-                <p>Descubre las marcas de coches más populares que ofrecemos en Outlet de Coches.</p>
-                <a href="{% url 'listar_marcas' %}" class="btn btn-outline-primary">Ver Marcas</a>
+            {% for coche in coches %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ coche.marca.nombre }} {{ coche.modelo }} ({{ coche.anio }})</h5>
+                        <p class="card-text">
+                            <strong>Kilometraje:</strong> {{ coche.kilometraje }} km<br>
+                            <strong>Color:</strong> {{ coche.color }}<br>
+                            <strong>Combustible:</strong> {{ coche.combustible }}<br>
+                        </p>
+                        <a href="{% url 'show_coche' coche.id %}" class="btn btn-primary">Ver Detalles</a>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-6">
-                <h2>Coches</h2>
-                <p>Explora nuestra lista completa de coches usados en diferentes categorías y elige el coche perfecto para ti.</p>
-                <a href="{% url 'listar_coches' %}" class="btn btn-outline-primary">Ver Coches</a>
-            </div>
+            {% empty %}
+            <p class="text-center">No hay coches disponibles en esta categoría en este momento.</p>
+            {% endfor %}
         </div>
-
-        <div class="row mt-5">
-            <div class="col-md-6">
-                <h2>Categorías</h2>
-                <p>Desde deportivos hasta familiares, ofrecemos coches en varias categorías para satisfacer tus necesidades.</p>
-                <a href="{% url 'listar_categorias' %}" class="btn btn-outline-primary">Ver Categorías</a>
-            </div>
-            <div class="col-md-6">
-                <h2>Ofertas</h2>
-                <p>Descubre nuestras ofertas especiales y encuentra el mejor precio para tu próximo coche.</p>
-                <a href="{% url 'listar_ofertasCoche' %}" class="btn btn-outline-primary">Ver Ofertas</a>
-            </div>
-        </div>
+        <a href="{% url 'listar_categorias' %}" class="btn btn-secondary mt-4">Volver a la Lista de Categorías</a>
     </div>
 
     <!-- Pie de Página -->

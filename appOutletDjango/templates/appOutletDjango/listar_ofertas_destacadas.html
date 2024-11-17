@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ofertas Destacadas - Outlet Car</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'appOutletDjango/style.css' %}">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center text-primary mb-4">Ofertas Destacadas de Coche</h1>
+        <div class="row">
+            {% for oferta in ofertas %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ oferta.coche.marca.nombre }} {{ oferta.coche.modelo }} ({{ oferta.coche.anio }})</h5>
+                            <p class="card-text">
+                                <strong>Precio:</strong> {{ oferta.precio }} €<br>
+                                <strong>Descuento:</strong> {{ oferta.descuento }} %<br>
+                                <strong>Kilometraje:</strong> {{ oferta.coche.kilometraje }} km<br>
+                                <strong>Color:</strong> {{ oferta.coche.color }}<br>
+                                <strong>Combustible:</strong> {{ oferta.coche.combustible }}<br>
+                                <strong>Disponible:</strong> {{ oferta.disponible|yesno:"Sí,No" }}<br>
+                                <strong>Destacada:</strong> {{ oferta.destacada|yesno:"Sí,No" }}<br>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <p class="text-center">No hay ofertas destacadas disponibles en este momento.</p>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

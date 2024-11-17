@@ -4,17 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Marcas</title>
-    <!-- Bootstrap CSS -->
+    <title>Lista de Marcas - Outlet de Coches</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'appOutletDjango/style.css' %}">
 </head>
 <body>
+    <!-- Barra de Navegación -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="{% url 'index' %}">Outlet de Coches</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
@@ -26,28 +23,32 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'listar_ofertasCoche' %}">Ofertas</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'listar_categorias' %}">Categorías</a>
+                </li>
             </ul>
         </div>
     </nav>
 
     <div class="container my-5">
-        <h1 class="text-primary">Lista de Marcas</h1>
-        <div class="row">
+        <h1 class="display-4">Lista de Marcas</h1>
+        <ul class="list-group">
             {% for marca in marcas %}
-                <div class="col-md-4 my-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ marca.nombre }}</h5>
-                            <p class="card-text">País de origen: {{ marca.pais_origen }}</p>
-                            <a href="{% url 'show_marca' marca.id %}" class="btn btn-primary">Ver Detalles</a>
-                        </div>
-                    </div>
-                </div>
+                <li class="list-group-item">
+                    <a href="{% url 'show_marca' marca.id %}">
+                        {{ marca.nombre }}
+                    </a>
+                </li>
             {% endfor %}
-        </div>
-
-        <a href="{% url 'index' %}" class="btn btn-secondary mt-4">Volver a la Página Principal</a>
+        </ul>
     </div>
+
+    <!-- Pie de Página -->
+    <footer class="footer bg-light text-center py-3 mt-5">
+        <div class="container">
+            <span class="text-muted">&copy; 2024 Outlet de Coches. Todos los derechos reservados.</span>
+        </div>
+    </footer>
 
     <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

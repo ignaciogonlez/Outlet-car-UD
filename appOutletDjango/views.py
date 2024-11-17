@@ -21,31 +21,14 @@ def index(request):
 
 def listar_marcas(request):
     # Obtener todas las marcas
-    marcas = Marca.objects.all()
+    marcas = Marca.objects.all().order_by('nombre')
 
-    # Generar el contenido dinámico con un for
-    contenido = "<h1>Lista de Marcas</h1><ul>"
-    for marca in marcas:
-        contenido += f"<li>Detalles de la marca: {marca.nombre}</li>"
-    contenido += "</ul>"
-
-    # Devolver el contenido como respuesta
-    return HttpResponse(contenido)
+    # Renderizar el contenido con el contexto
+    return render(request, 'appOutletDjango/listar_marcas.html', {'marcas': marcas})
 
 def listar_ofertasCoche(request):
     # Obtener todas las marcas
     ofertasCoche = OfertaCoche.objects.all()
-
-    # Generar el contenido dinámico con un for
-    #contenido = "<h1>Lista de ofertasCoche</h1><ul>"
-
-    #for ofertaCoche in ofertasCoche:
-        #contenido += f"<li>Detalles de la oferta de coche: {ofertaCoche.coche}, {ofertaCoche.precio}, {ofertaCoche.descuento}, {ofertaCoche.disponible}, {ofertaCoche.destacada}</li>"
-    #contenido += "</ul>"
-
-    # Devolver el contenido como respuesta
-    #return HttpResponse(contenido)
-    #Asi ya esta bien  la conexion con el html del index
     context = {
         'ofertasCoche': ofertasCoche
     }
@@ -54,16 +37,14 @@ def listar_ofertasCoche(request):
 
 def listar_coches(request):
     # Obtener todas las marcas
-    coches = Coche.objects.all()
+    coches = Coche.objects.prefetch_related('categoria').all().order_by('modelo') 
+     # Generar el contexto con los coches
+    contexto = {
+        'coches': coches,
+    }
 
-    # Generar el contenido dinámico con un for
-    contenido = "<h1>Lista de coches</h1><ul>"
-    for coche in coches:
-        contenido += f"<li>Detalles del coche: {coche.marca}, {coche.modelo}, {coche.anio}, {coche.kilometraje}, {coche.categoria}</li>"
-    contenido += "</ul>"
-
-    # Devolver el contenido como respuesta
-    return HttpResponse(contenido)
+    # Renderizar la plantilla con los coches ordenados
+    return render(request, 'appOutletDjango/listar_coches.html', contexto)
 
 
 def listar_categorias(request):
@@ -72,12 +53,8 @@ def listar_categorias(request):
 
     # Generar el contenido dinámico con un for
     contenido = "<h1>Lista de Categorias</h1><ul>"
-    for categoria in categorias:
-        contenido += f"<li>Detalles de la categoria: {categoria.nombre}</li>"
-    contenido += "</ul>"
-
-    # Devolver el contenido como respuesta
-    return HttpResponse(contenido)
+    context = {'categorias': categorias}
+    return render(request, 'appOutletDjango/listar_categorias.html', context)
 
 #devuelve el listado de categorias
 def index_categorias(request):
@@ -85,10 +62,16 @@ def index_categorias(request):
 	output = ', '.join([d.nombre for d in categorias])
 	return HttpResponse(output)
 
-#devuelve los datos de una categoria
+# Muestra los detalles de una categoría y todos los coches asociados
 def show_categoria(request, categoria_id):
-	categoria = Categoria.objects.get(pk=categoria_id)
-	return HttpResponse(f"Detalles de la categoria: {categoria.nombre}")
+    categoria = get_object_or_404(Categoria, pk=categoria_id)
+    coches = Coche.objects.filter(categoria=categoria)
+    
+    context = {
+        'categoria': categoria,
+        'coches': coches
+    }
+    return render(request, 'appOutletDjango/listar_coches_categoria.html', context)
 
 #devuelve los coches de una categorias
 def index_coches(request, categoria_id):
@@ -98,8 +81,9 @@ def index_coches(request, categoria_id):
 
 #devuelve los detalles de un coche
 def show_coche(request, coche_id):
-	coche = Coche.objects.get(pk=coche_id)
-	return HttpResponse(f"Detalles del coche: {coche.marca}, {coche.modelo}, {coche.anio}, {coche.kilometraje}, {coche.categoria}")
+    coche = get_object_or_404(Coche, pk=coche_id)
+    context = {'coche': coche}
+    return render(request, 'appOutletDjango/detalles_coche.html', context)
 
 
 def show_ofertaCoche(request, ofertaCoche_id):
@@ -121,8 +105,17 @@ def show_marca(request, marca_id):
     }
     # Renderizar la plantilla de detalles de la marca
     return render(request, 'appOutletDjango/detalles_marca.html', context)
-    
-    
-    #Obtener la marca o devolver un 404 si no existe
-    #marca = get_object_or_404(Marca, pk=marca_id)
-    #return HttpResponse(f"Detalles de la marca: {marca.nombre}")
+
+#devuelve las ofertas destacadas
+def listar_ofertas_destacadas(request):
+    # Filtra solo las ofertas donde 'destacada' es True
+    ofertas_destacadas = OfertaCoche.objects.filter(destacada=True)
+
+    # Añade estas ofertas al contexto para la plantilla HTML
+    context = {
+        'ofertas': ofertas_destacadas,
+    }
+
+    # Renderiza la plantilla de ofertas con las ofertas destacadas
+    return render(request, 'appOutletDjango/listar_ofertas_destacadas.html', context)
+
