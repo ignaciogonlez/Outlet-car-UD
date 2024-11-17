@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Categoria, Marca, Coche
-from django.shortcuts import get_object_or_404
+from django.shortcuts import render, get_object_or_404
 
 
 from django.http import HttpResponse
@@ -52,4 +52,17 @@ def show_coche(request, coche_id):
 def show_marca(request, marca_id):
     # Obtener la marca o devolver un 404 si no existe
     marca = get_object_or_404(Marca, pk=marca_id)
-    return HttpResponse(f"Detalles de la marca: {marca.nombre}")
+    # Obtener todos los coches asociados con esta marca
+    coches = Coche.objects.filter(marca=marca)
+    # Pasar la marca y los coches al contexto
+    context = {
+        'marca': marca,
+        'coches': coches
+    }
+    # Renderizar la plantilla de detalles de la marca
+    return render(request, 'appOutletDjango/detalles_marca.html', context)
+    
+    
+    #Obtener la marca o devolver un 404 si no existe
+    #marca = get_object_or_404(Marca, pk=marca_id)
+    #return HttpResponse(f"Detalles de la marca: {marca.nombre}")

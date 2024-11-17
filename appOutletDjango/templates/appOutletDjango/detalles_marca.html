@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles de la Marca - {{ marca.nombre }}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">  <!-- Puedes agregar estilos si tienes -->
+</head>
+<body>
+    <h1>Detalles de la Marca: {{ marca.nombre }}</h1>
+    <p><strong>País de Origen:</strong> {{ marca.pais_origen }}</p>
+    <p><strong>Año de Fundación:</strong> {{ marca.fundacion }}</p>
+
+    <h2>Coches de la marca {{ marca.nombre }}</h2>
+    {% if coches %}
+        <ul>
+            {% for coche in coches %}
+                <li>{{ coche.modelo }} - Año: {{ coche.anio }} - Kilometraje: {{ coche.kilometraje }} km</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No hay coches disponibles para esta marca.</p>
+    {% endif %}
+</body>
+</html>
