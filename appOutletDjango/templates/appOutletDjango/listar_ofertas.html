@@ -39,7 +39,8 @@
                                 {% endif %}
                                 <strong>Disponible:</strong> {{ oferta.disponible|yesno:"Sí,No" }}<br>
                             </p>
-                            <a href="{% url 'show_ofertaCoche' oferta.id %}" class="btn btn-primary">Ver Detalles</a>
+                            <!-- Actualizamos el enlace al que lleva a los detalles del coche -->
+                            <a href="{% url 'show_coche' oferta.coche.id %}" class="btn btn-primary">Ver Detalles</a>
                         </div>
                     </div>
                 </div>
