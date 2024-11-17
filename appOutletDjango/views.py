@@ -53,7 +53,7 @@ def listar_coches(request):
     # Generar el contenido dinámico con un for
     contenido = "<h1>Lista de coches</h1><ul>"
     for coche in coches:
-        contenido += f"<li>Detalles del coche: {coche.marca}, {coche.modelo}, {coche.anio}, {coche.kilometraje}, {coche.categorias}</li>"
+        contenido += f"<li>Detalles del coche: {coche.marca}, {coche.modelo}, {coche.anio}, {coche.kilometraje}, {coche.categoria}</li>"
     contenido += "</ul>"
 
     # Devolver el contenido como respuesta
@@ -93,7 +93,7 @@ def index_coches(request, categoria_id):
 #devuelve los detalles de un coche
 def show_coche(request, coche_id):
 	coche = Coche.objects.get(pk=coche_id)
-	return HttpResponse(f"Detalles del coche: {coche.marca}, {coche.modelo}, {coche.anio}, {coche.kilometraje}, {coche.categorias}")
+	return HttpResponse(f"Detalles del coche: {coche.marca}, {coche.modelo}, {coche.anio}, {coche.kilometraje}, {coche.categoria}")
 
 
 def show_ofertaCoche(request, ofertaCoche_id):
