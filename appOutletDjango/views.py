@@ -37,13 +37,18 @@ def listar_ofertasCoche(request):
     ofertasCoche = OfertaCoche.objects.all()
 
     # Generar el contenido dinámico con un for
-    contenido = "<h1>Lista de ofertasCoche</h1><ul>"
-    for ofertaCoche in ofertasCoche:
-        contenido += f"<li>Detalles de la oferta de coche: {ofertaCoche.coche}, {ofertaCoche.precio}, {ofertaCoche.descuento}, {ofertaCoche.disponible}, {ofertaCoche.destacada}</li>"
-    contenido += "</ul>"
+    #contenido = "<h1>Lista de ofertasCoche</h1><ul>"
+
+    #for ofertaCoche in ofertasCoche:
+        #contenido += f"<li>Detalles de la oferta de coche: {ofertaCoche.coche}, {ofertaCoche.precio}, {ofertaCoche.descuento}, {ofertaCoche.disponible}, {ofertaCoche.destacada}</li>"
+    #contenido += "</ul>"
 
     # Devolver el contenido como respuesta
-    return HttpResponse(contenido)
+    #return HttpResponse(contenido)
+    context = {
+        'ofertasCoche': ofertasCoche
+    }
+    return render(request, 'appOutletDjango/listar_ofertas.html', context)
 
 
 def listar_coches(request):
