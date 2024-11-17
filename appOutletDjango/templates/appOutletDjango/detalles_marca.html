@@ -5,22 +5,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalles de la Marca - {{ marca.nombre }}</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">  <!-- Puedes agregar estilos si tienes -->
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'appOutletDjango/style.css' %}">
 </head>
 <body>
-    <h1>Detalles de la Marca: {{ marca.nombre }}</h1>
-    <p><strong>País de Origen:</strong> {{ marca.pais_origen }}</p>
-    <p><strong>Año de Fundación:</strong> {{ marca.fundacion }}</p>
-
-    <h2>Coches de la marca {{ marca.nombre }}</h2>
-    {% if coches %}
-        <ul>
+    <div class="container my-4">
+        <h1 class="text-primary">Detalles de la Marca: {{ marca.nombre }}</h1>
+        <p><strong>País de Origen:</strong> {{ marca.pais_origen }}</p>
+        <p><strong>Año de Fundación:</strong> {{ marca.fundacion }}</p>
+        
+        <h2 class="mt-4">Coches Disponibles de {{ marca.nombre }}</h2>
+        <ul class="list-group">
             {% for coche in coches %}
-                <li>{{ coche.modelo }} - Año: {{ coche.anio }} - Kilometraje: {{ coche.kilometraje }} km</li>
+                <li class="list-group-item">
+                    <strong>Modelo:</strong> {{ coche.modelo }} <br>
+                    <strong>Año:</strong> {{ coche.anio }} <br>
+                    <strong>Kilometraje:</strong> {{ coche.kilometraje }} km <br>
+                    <strong>Color:</strong> {{ coche.color }} <br>
+                    <strong>Combustible:</strong> {{ coche.combustible }}
+                </li>
             {% endfor %}
         </ul>
-    {% else %}
-        <p>No hay coches disponibles para esta marca.</p>
-    {% endif %}
+
+        <a href="{% url 'listar_marcas' %}" class="btn btn-secondary mt-4">Volver a la Lista de Marcas</a>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

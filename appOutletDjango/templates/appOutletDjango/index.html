@@ -1,12 +1,96 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Outlet de Coches</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Outlet Car - Inicio</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'appOutletDjango/style.css' %}">
 </head>
 <body>
-    <h1>Bienvenido ssa Outlet de Coches</h1>
-    <p>
-        Navega a <a href="/appOutletDjango/marcas/">marcas</a> para ver la lista de marcas disponibles.
-    </p>
+    <!-- Barra de Navegación -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{% url 'index' %}">Outlet de Coches</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'listar_marcas' %}">Marcas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'listar_coches' %}">Coches</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'listar_ofertasCoche' %}">Ofertas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'listar_categorias' %}">Categorías</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Sección de Encabezado Principal -->
+    <header class="jumbotron text-center mt-4">
+        <h1 class="display-4">Bienvenido a Outlet de Coches</h1>
+        <p class="lead">¡Encuentra las mejores ofertas de coches usados, de las mejores marcas y diferentes categorías!
+        </p>
+        <hr class="my-4">
+        <p>Visita nuestras secciones para conocer más sobre nuestras ofertas de coches, marcas y categorías.</p>
+        <a class="btn btn-primary btn-lg" href="{% url 'listar_ofertasCoche' %}" role="button">Ver Ofertas Destacadas</a>
+
+        <!-- Agregar enlace a la primera marca si está disponible -->
+        {% if enlace %}
+            <p class="mt-4">
+                <a class="btn btn-outline-success btn-lg" href="{{ enlace }}" role="button">Ver Marca Destacada</a>
+            </p>
+        {% else %}
+            <p class="text-muted">No hay marcas disponibles en este momento.</p>
+        {% endif %}
+    </header>
+
+    <!-- Sección de Información General -->
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Marcas de Coches</h2>
+                <p>Descubre las marcas de coches más populares que ofrecemos en Outlet de Coches.</p>
+                <a href="{% url 'listar_marcas' %}" class="btn btn-outline-primary">Ver Marcas</a>
+            </div>
+            <div class="col-md-6">
+                <h2>Coches Disponibles</h2>
+                <p>Explora nuestra lista completa de coches usados en diferentes categorías y elige el coche perfecto para ti.</p>
+                <a href="{% url 'listar_coches' %}" class="btn btn-outline-primary">Ver Coches</a>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-md-6">
+                <h2>Categorías</h2>
+                <p>Desde deportivos hasta familiares, ofrecemos coches en varias categorías para satisfacer tus necesidades.</p>
+                <a href="{% url 'listar_categorias' %}" class="btn btn-outline-primary">Ver Categorías</a>
+            </div>
+            <div class="col-md-6">
+                <h2>Ofertas</h2>
+                <p>Descubre nuestras ofertas especiales y encuentra el mejor precio para tu próximo coche.</p>
+                <a href="{% url 'listar_ofertasCoche' %}" class="btn btn-outline-primary">Ver Ofertas</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pie de Página -->
+    <footer class="footer bg-light text-center py-3">
+        <div class="container">
+            <span class="text-muted">&copy; 2024 Outlet de Coches. Todos los derechos reservados.</span>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

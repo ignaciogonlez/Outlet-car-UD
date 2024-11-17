@@ -14,10 +14,10 @@ def index(request):
         enlace = f'<a href="/marcas/{marca.id}/">marcas</a>'
     except Marca.DoesNotExist:
         enlace = 'marcas (no disponible)'
-    
-    return HttpResponse(
-        f'Bienvenido a Outlet de Coches. Navega a {enlace} para ver la lista de marcas disponibles.'
-    )
+    context = {
+        'enlace': enlace,
+    }
+    return render(request, 'appOutletDjango/index.html', context)
 
 def listar_marcas(request):
     # Obtener todas las marcas
