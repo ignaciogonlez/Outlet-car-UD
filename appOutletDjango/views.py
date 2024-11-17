@@ -45,6 +45,7 @@ def listar_ofertasCoche(request):
 
     # Devolver el contenido como respuesta
     #return HttpResponse(contenido)
+    #Asi ya esta bien
     context = {
         'ofertasCoche': ofertasCoche
     }
