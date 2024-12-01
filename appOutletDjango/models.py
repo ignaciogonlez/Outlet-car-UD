@@ -9,14 +9,12 @@ class Marca(models.Model):
     def __str__(self):
         return self.nombre
 
-
 # Categorías de los coches, como Turismo, Familiar, Deportivo, etc.
 class Categoria(models.Model):
     nombre = models.CharField(max_length=100)
 
     def __str__(self):
         return self.nombre
-
 
 # Modelo Coche, que pertenece a una Marca y puede estar en varias Categorías
 class Coche(models.Model):
@@ -26,15 +24,10 @@ class Coche(models.Model):
     kilometraje = models.IntegerField()  # Kilometraje del coche
     color = models.CharField(max_length=50)  # Color del coche
     combustible = models.CharField(max_length=50)  # Tipo de combustible (ej.: gasolina, diésel, eléctrico)
-    categoria = models.ForeignKey(
-        Categoria, 
-        on_delete=models.CASCADE, 
-        default=5  # Usa el ID de la categoría existente
-    )
+    categorias = models.ManyToManyField(Categoria, related_name='coches')  # Relación N:M entre Coche y Categoría
 
     def __str__(self):
         return f"{self.marca.nombre} {self.modelo} ({self.anio})"
-
 
 # Oferta del coche con detalles de precios y promociones
 class OfertaCoche(models.Model):

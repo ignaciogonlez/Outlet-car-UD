@@ -1,24 +1,23 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from .models import Categoria, Marca, Coche, OfertaCoche
-from django.shortcuts import get_object_or_404
 
-
-from django.http import HttpResponse
-from .models import Marca
-
+# Vista para la página principal
 def index(request):
-    # Obtener la primera marca (o la marca con id=1)
-    try:
-        marca = Marca.objects.get(pk=1)  # O ajusta la lógica según tus necesidades
-        enlace = f'<a href="/marcas/{marca.id}/">marcas</a>'
-    except Marca.DoesNotExist:
-        enlace = 'marcas (no disponible)'
+    # Filtra una oferta por cada marca, elige la oferta más barata o la más destacada, por ejemplo.
+    ofertas_por_marca = []
+    marcas = Marca.objects.all()
+    for marca in marcas:
+        oferta = OfertaCoche.objects.filter(coche__marca=marca).order_by('precio').first()  # Oferta más barata
+        if oferta:
+            ofertas_por_marca.append(oferta)
+
     context = {
-        'enlace': enlace,
+        'ofertas_por_marca': ofertas_por_marca
     }
     return render(request, 'appOutletDjango/index.html', context)
 
+# Vista para listar las marcas
 def listar_marcas(request):
     # Obtener todas las marcas
     marcas = Marca.objects.all().order_by('nombre')
@@ -26,19 +25,21 @@ def listar_marcas(request):
     # Renderizar el contenido con el contexto
     return render(request, 'appOutletDjango/listar_marcas.html', {'marcas': marcas})
 
+# Vista para listar las ofertas de coches
 def listar_ofertasCoche(request):
-    # Obtener todas las marcas
+    # Obtener todas las ofertas de coches
     ofertasCoche = OfertaCoche.objects.all()
     context = {
         'ofertasCoche': ofertasCoche
     }
     return render(request, 'appOutletDjango/listar_ofertas.html', context)
 
-
+# Vista para listar los coches
 def listar_coches(request):
-    # Obtener todas las marcas
-    coches = Coche.objects.prefetch_related('categoria').all().order_by('modelo') 
-     # Generar el contexto con los coches
+    # Obtener todos los coches, junto con sus categorías (prefetch_related evita consultas adicionales para categorías)
+    coches = Coche.objects.prefetch_related('categorias').all().order_by('modelo')
+    
+    # Generar el contexto con los coches
     contexto = {
         'coches': coches,
     }
@@ -46,53 +47,49 @@ def listar_coches(request):
     # Renderizar la plantilla con los coches ordenados
     return render(request, 'appOutletDjango/listar_coches.html', contexto)
 
-
+# Vista para listar categorías
 def listar_categorias(request):
-    # Obtener todas las marcas
+    # Obtener todas las categorías
     categorias = Categoria.objects.all()
-
-    # Generar el contenido dinámico con un for
-    contenido = "<h1>Lista de Categorias</h1><ul>"
     context = {'categorias': categorias}
     return render(request, 'appOutletDjango/listar_categorias.html', context)
 
-#devuelve el listado de categorias
-def index_categorias(request):
-	categorias = Categoria.objects.order_by('nombre')
-	output = ', '.join([d.nombre for d in categorias])
-	return HttpResponse(output)
-
-# Muestra los detalles de una categoría y todos los coches asociados
+# Vista para mostrar los detalles de una categoría y todos los coches asociados
 def show_categoria(request, categoria_id):
+    # Obtener la categoría o devolver un 404 si no existe
     categoria = get_object_or_404(Categoria, pk=categoria_id)
-    coches = Coche.objects.filter(categoria=categoria)
-    
+    # Obtener todos los coches asociados a la categoría
+    coches = Coche.objects.filter(categorias=categoria)
+
     context = {
         'categoria': categoria,
-        'coches': coches
+        'coches': coches,
     }
     return render(request, 'appOutletDjango/listar_coches_categoria.html', context)
 
-#devuelve los coches de una categorias
-def index_coches(request, categoria_id):
-	categorias = Categoria.objects.get(pk=categoria_id)
-	output = ', '.join([e.nombre for e in categoria.coche_set.all()])
-	return HttpResponse(output)
-
-#devuelve los detalles de un coche
+# Vista para mostrar los detalles de un coche
 def show_coche(request, coche_id):
+    # Obtener el coche o devolver un 404 si no existe
     coche = get_object_or_404(Coche, pk=coche_id)
-    context = {'coche': coche}
+    categorias = coche.categorias.all()  # Obtenemos todas las categorías del coche
+
+    context = {
+        'coche': coche,
+        'categorias': categorias,
+    }
     return render(request, 'appOutletDjango/detalles_coche.html', context)
 
-
+# Vista para mostrar los detalles de una oferta de coche
 def show_ofertaCoche(request, ofertaCoche_id):
-	ofertaCoche = OfertaCoche.objects.get(pk=ofertaCoche_id)
-	return HttpResponse(f"Detalles de la oferta de coche: {ofertaCoche.coche}, {ofertaCoche.precio}, {ofertaCoche.descuento}, {ofertaCoche.disponible}, {ofertaCoche.destacada}")
+    # Usar get_object_or_404 para asegurar la existencia de la oferta de coche
+    ofertaCoche = get_object_or_404(OfertaCoche, pk=ofertaCoche_id)
 
+    context = {
+        'ofertaCoche': ofertaCoche,
+    }
+    return render(request, 'appOutletDjango/detalles_oferta.html', context)
 
-
-#devuelve los detalles de una marca
+# Vista para mostrar los detalles de una marca y los coches asociados
 def show_marca(request, marca_id):
     # Obtener la marca o devolver un 404 si no existe
     marca = get_object_or_404(Marca, pk=marca_id)
@@ -106,7 +103,7 @@ def show_marca(request, marca_id):
     # Renderizar la plantilla de detalles de la marca
     return render(request, 'appOutletDjango/detalles_marca.html', context)
 
-#devuelve las ofertas destacadas
+# Vista para listar ofertas destacadas
 def listar_ofertas_destacadas(request):
     # Filtra solo las ofertas donde 'destacada' es True
     ofertas_destacadas = OfertaCoche.objects.filter(destacada=True)

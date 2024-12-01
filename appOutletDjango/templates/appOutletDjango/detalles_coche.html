@@ -14,7 +14,12 @@
                     <strong>Kilometraje:</strong> {{ coche.kilometraje }} km<br>
                     <strong>Color:</strong> {{ coche.color }}<br>
                     <strong>Combustible:</strong> {{ coche.combustible }}<br>
-                    <strong>Categoría:</strong> {{ coche.categoria.nombre }}
+                    <strong>Categorías:</strong> 
+                    {% for categoria in coche.categorias.all %}
+                        <span class="badge badge-info">{{ categoria.nombre }}</span>
+                    {% empty %}
+                        <span class="text-muted">Sin Categorías</span>
+                    {% endfor %}
                 </p>
                 <a href="{% url 'listar_coches' %}" class="btn btn-secondary mt-3">Volver a la Lista de Coches</a>
                 <a href="{% url 'listar_ofertasCoche' %}" class="btn btn-info mt-3 ml-2">Volver a la Lista de Ofertas</a>

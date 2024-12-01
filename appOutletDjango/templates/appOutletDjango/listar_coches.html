@@ -12,6 +12,14 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">{{ coche.marca.nombre }} {{ coche.modelo }} ({{ coche.anio }})</h5>
+                            <p class="card-text">
+                                <strong>Categorías:</strong> 
+                                {% for categoria in coche.categorias.all %}
+                                    <span class="badge badge-info">{{ categoria.nombre }}</span>
+                                {% empty %}
+                                    <span class="text-muted">Sin Categorías</span>
+                                {% endfor %}
+                            </p>
                             <a href="{% url 'show_coche' coche.id %}" class="btn btn-primary">Ver Detalles</a>
                         </div>
                     </div>
