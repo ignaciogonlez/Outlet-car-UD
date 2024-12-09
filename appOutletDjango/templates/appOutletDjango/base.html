@@ -43,4 +43,22 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+{% block scripts %}
+    <!-- Aquí se pueden agregar scripts adicionales de las plantillas que extienden base.html -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".toggle-details").on("click", function () {
+                // Encontrar la sección de detalles asociada
+                var $detailsSection = $(this).closest('.card-body').find('.detalles-coche');
+    
+                // Alternar visibilidad
+                $detailsSection.slideToggle();
+    
+                // Cambiar el texto del botón
+                $(this).text($detailsSection.is(":visible") ? "Ocultar Detalles" : "Desplegar Detalles");
+            });
+        });
+    </script>
+{% endblock %}
 </html>

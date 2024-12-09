@@ -3,29 +3,35 @@
 {% block title %}Lista de Ofertas de Coche{% endblock %}
 
 {% block content %}
-    <div class="container my-5">
-        <h1 class="text-center text-primary mb-4">Lista de Ofertas de Coche</h1>
-        <div class="row">
-            {% for oferta in ofertasCoche %}
-                <div class="col-md-6 mb-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ oferta.coche.marca.nombre }} {{ oferta.coche.modelo }} ({{ oferta.coche.anio }})</h5>
-                            <p class="card-text">
-                                <strong>Precio:</strong> {{ oferta.precio }} €<br>
-                                {% if oferta.descuento %}
-                                    <strong>Descuento:</strong> {{ oferta.descuento }} %<br>
-                                {% endif %}
-                                <strong>Disponible:</strong> {{ oferta.disponible|yesno:"Sí,No" }}<br>
-                            </p>
-                            <!-- Enlace a los detalles del coche -->
-                            <a href="{% url 'show_coche' oferta.coche.id %}" class="btn btn-primary">Ver Detalles</a>
-                        </div>
+<div class="container my-5">
+    <h1 class="mb-4">Lista de Ofertas de Coche</h1>
+    <div class="row">
+        {% for oferta in ofertasCoche %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ oferta.coche.marca.nombre }} {{ oferta.coche.modelo }} ({{ oferta.coche.anio }})</h5>
+                    <!-- Botones posicionados correctamente sin ocupar toda la línea -->
+                    <div>
+                        <a href="{% url 'show_ofertaCoche' oferta.id %}" class="btn btn-primary mb-2">Ver Detalles</a>
+                    </div>
+                    <div>
+                        <button class="btn btn-info toggle-details">Desplegar Detalles</button>
+                    </div>
+                    <div class="detalles-coche mt-3" style="display: none;">
+                        <p><strong>Precio:</strong> {{ oferta.precio }} €</p>
+                        {% if oferta.descuento %}
+                        <p><strong>Descuento:</strong> {{ oferta.descuento }} %</p>
+                        {% endif %}
+                        <p><strong>Disponible:</strong> {{ oferta.disponible|yesno:"Sí,No" }}</p>
+                        <p><strong>Destacada:</strong> {{ oferta.destacada|yesno:"Sí,No" }}</p>
                     </div>
                 </div>
-            {% empty %}
-                <p class="text-center">No hay ofertas disponibles en este momento.</p>
-            {% endfor %}
+            </div>
         </div>
+        {% empty %}
+        <p class="text-center">No hay ofertas disponibles en este momento.</p>
+        {% endfor %}
     </div>
+</div>
 {% endblock %}

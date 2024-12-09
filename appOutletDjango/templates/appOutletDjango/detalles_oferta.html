@@ -1,0 +1,26 @@
+{% extends 'appOutletDjango/base.html' %}
+
+{% block title %}Detalles de la Oferta{% endblock %}
+
+{% block content %}
+    <div class="container my-5">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title text-primary">Detalles de la Oferta</h2>
+                <hr>
+                <p>
+                    <strong>Modelo:</strong> {{ ofertaCoche.coche.modelo }}<br>
+                    <strong>Marca:</strong> {{ ofertaCoche.coche.marca.nombre }}<br>
+                    <strong>Año:</strong> {{ ofertaCoche.coche.anio }}<br>
+                    <strong>Precio:</strong> {{ ofertaCoche.precio }} €<br>
+                    {% if ofertaCoche.descuento %}
+                        <strong>Descuento:</strong> {{ ofertaCoche.descuento }} %<br>
+                    {% endif %}
+                    <strong>Disponible:</strong> {{ ofertaCoche.disponible|yesno:"Sí,No" }}<br>
+                    <strong>Destacada:</strong> {{ ofertaCoche.destacada|yesno:"Sí,No" }}
+                </p>
+                <a href="{% url 'listar_ofertasCoche' %}" class="btn btn-secondary">Volver a las Ofertas</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

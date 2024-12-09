@@ -1,16 +1,28 @@
 from django.urls import path
-from . import views
+from .views import (
+    IndexView,
+    MarcaListView,
+    MarcaDetailView,
+    CategoriaListView,
+    CategoriaDetailView,
+    CocheListView,
+    CocheDetailView,
+    OfertaCocheListView,
+    OfertaCocheDetailView,
+    OfertaDestacadaListView,
+    filtrar_coches_ajax
+)
 
 urlpatterns = [
-    path('', views.index, name='index'),  # Ruta raíz
-    path('marcas/', views.listar_marcas, name='listar_marcas'),  # Ruta para listar marcas
-    path('marcas/<int:marca_id>/', views.show_marca, name='show_marca'),  # Detalles de una marca
-    path('categorias/', views.listar_categorias, name='listar_categorias'),  # Ruta para listar marcas
-    path('categorias/<int:categoria_id>/', views.show_categoria, name='show_categoria'),  # Detalles de una marca
-    path('coches/', views.listar_coches, name='listar_coches'),  # Ruta para listar marcas
-    path('coches/<int:coche_id>/', views.show_coche, name='show_coche'),  # Detalles de una marca
-    path('ofertasCoche/', views.listar_ofertasCoche, name='listar_ofertasCoche'),  # Ruta para listar marcas
-    path('ofertasCoche/<int:ofertaCoche_id>/', views.show_ofertaCoche, name='show_ofertaCoche'),  # Detalles de una marca
-    path('ofertasDestacadas/', views.listar_ofertas_destacadas, name='listar_ofertas_destacadas'), #Ruta para listar ofertas destacadas
-
+    path('', IndexView.as_view(), name='index'),  # Ruta raíz
+    path('marcas/', MarcaListView.as_view(), name='listar_marcas'),  # Ruta para listar marcas
+    path('marcas/<int:pk>/', MarcaDetailView.as_view(), name='show_marca'),  # Detalles de una marca
+    path('categorias/', CategoriaListView.as_view(), name='listar_categorias'),  # Ruta para listar categorías
+    path('categorias/<int:pk>/', CategoriaDetailView.as_view(), name='show_categoria'),  # Detalles de una categoría
+    path('coches/', CocheListView.as_view(), name='listar_coches'),  # Ruta para listar coches
+    path('coches/filtrar/', filtrar_coches_ajax, name='filtrar_coches'),  # Nueva ruta para AJAX
+    path('coches/<int:pk>/', CocheDetailView.as_view(), name='show_coche'),  # Detalles de un coche
+    path('ofertasCoche/', OfertaCocheListView.as_view(), name='listar_ofertasCoche'),  # Ruta para listar ofertas de coches
+    path('ofertasCoche/<int:pk>/', OfertaCocheDetailView.as_view(), name='show_ofertaCoche'),  # Detalles de una oferta de coche
+    path('ofertasDestacadas/', OfertaDestacadaListView.as_view(), name='listar_ofertas_destacadas'),  # Ruta para listar ofertas destacadas
 ]

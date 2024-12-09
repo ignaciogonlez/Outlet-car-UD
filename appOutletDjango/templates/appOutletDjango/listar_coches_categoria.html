@@ -3,7 +3,6 @@
 {% block title %}Coches en la Categoría {{ categoria.nombre }} - Outlet Car{% endblock %}
 
 {% block content %}
-    <!-- Sección de Coches en la Categoría -->
     <div class="container my-5">
         <h1 class="text-center text-primary mb-4">Coches en la Categoría: {{ categoria.nombre }}</h1>
         <div class="row">
@@ -12,12 +11,21 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">{{ coche.marca.nombre }} {{ coche.modelo }} ({{ coche.anio }})</h5>
-                            <p class="card-text">
-                                <strong>Kilometraje:</strong> {{ coche.kilometraje }} km<br>
-                                <strong>Color:</strong> {{ coche.color }}<br>
-                                <strong>Combustible:</strong> {{ coche.combustible }}<br>
-                            </p>
-                            <a href="{% url 'show_coche' coche.id %}" class="btn btn-primary">Ver Detalles</a>
+                            <a href="{% url 'show_coche' coche.id %}" class="btn btn-primary mb-2">Ver Detalles</a>
+                            <button class="btn btn-info toggle-details">Desplegar Detalles</button>
+                            <div class="detalles-coche mt-3" style="display: none;">
+                                <p><strong>Kilometraje:</strong> {{ coche.kilometraje }} km</p>
+                                <p><strong>Color:</strong> {{ coche.color }}</p>
+                                <p><strong>Combustible:</strong> {{ coche.combustible }}</p>
+                                <p>
+                                    <strong>Categorías:</strong> 
+                                    {% for categoria in coche.categorias.all %}
+                                        <span class="badge badge-info">{{ categoria.nombre }}</span>
+                                    {% empty %}
+                                        <span class="text-muted">Sin Categorías</span>
+                                    {% endfor %}
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
