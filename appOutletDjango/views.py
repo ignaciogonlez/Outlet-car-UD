@@ -11,6 +11,7 @@ from django.shortcuts import redirect
 # Vista para la página principal (Index)
 class IndexView(View):
     def get(self, request):
+        print("LANGUAGE_CODE:", request.LANGUAGE_CODE)  # Esto imprimirá el idioma actual en la consola.
         ofertas_por_marca = []
         marcas = Marca.objects.all()
         for marca in marcas:

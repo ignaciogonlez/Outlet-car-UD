@@ -1,0 +1,66 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-12-09 20:35+0100\n"
+"PO-Revision-Date: 2024-12-09 21:00+0100\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Español <es@li.org>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\appOutletDjango\templates\appOutletDjango\index.html:4
+msgid "Outlet Car - Inicio"
+msgstr "Outlet Car - Home"
+
+#: .\appOutletDjango\templates\appOutletDjango\index.html:9
+msgid "Bienvenido a Outlet de Coches"
+msgstr "Welcome to Outlet Car"
+
+#: .\appOutletDjango\templates\appOutletDjango\index.html:10
+msgid ""
+"¡Encuentra las mejores ofertas de coches usados, de las mejores marcas y "
+"diferentes categorías!"
+msgstr "Find the best deals on used cars, from top brands and different categories!"
+
+#: .\appOutletDjango\templates\appOutletDjango\index.html:12
+msgid ""
+"Visita nuestras secciones para conocer más sobre nuestras ofertas de coches, "
+"marcas y categorías."
+msgstr "Visit our sections to learn more about our car deals, brands, and categories."
+
+#: .\appOutletDjango\templates\appOutletDjango\index.html:13
+msgid "Ver Ofertas Destacadas"
+msgstr "View Featured Offers"
+
+#: .\appOutletDjango\templates\appOutletDjango\index.html:18
+msgid "Ofertas Relevantes por Marca"
+msgstr "Relevant Offers by Brand"
+
+#: .\appOutletDjango\templates\appOutletDjango\index.html:26
+msgid "Precio:"
+msgstr "Price:"
+
+#: .\appOutletDjango\templates\appOutletDjango\index.html:28
+msgid "Descuento:"
+msgstr "Discount:"
+
+#: .\appOutletDjango\templates\appOutletDjango\index.html:30
+msgid "Disponible:"
+msgstr "Available:"
+
+#: .\appOutletDjango\templates\appOutletDjango\index.html:32
+msgid "Ver Detalles del Coche"
+msgstr "View Car Details"
+
+#: .\appOutletDjango\templates\appOutletDjango\index.html:37
+msgid "No hay ofertas disponibles en este momento."
+msgstr "No offers available at this moment."
