@@ -45,3 +45,15 @@ class OfertaCoche(models.Model):
         if self.descuento:
             return self.precio * (1 - (self.descuento / 100))
         return self.precio
+
+class Cita(models.Model):
+    nombre = models.CharField(max_length=100)  # Campo obligatorio para el nombre
+    email = models.EmailField()  # Correo electrónico 
+    telefono = models.CharField(max_length=15, blank=True, null=True)  # Campo opcional para teléfono
+    oferta = models.ForeignKey('OfertaCoche', on_delete=models.CASCADE, related_name='citas')  # Relación con OfertaCoche
+    fecha_cita = models.DateField()  # Campo para la fecha de la cita
+    hora_cita = models.TimeField()  # Campo para la hora de la cita
+    mensaje = models.TextField(blank=True, max_length=500)  # Mensaje opcional con longitud máxima de 500 caracteres
+
+    def __str__(self):
+        return f"{self.nombre} - {self.oferta.coche.modelo} ({self.fecha_cita} a las {self.hora_cita})"

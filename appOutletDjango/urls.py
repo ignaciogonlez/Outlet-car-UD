@@ -10,7 +10,8 @@ from .views import (
     OfertaCocheListView,
     OfertaCocheDetailView,
     OfertaDestacadaListView,
-    filtrar_coches_ajax
+    filtrar_coches_ajax,
+    ConcertarCitaView
 )
 
 urlpatterns = [
@@ -25,4 +26,6 @@ urlpatterns = [
     path('ofertasCoche/', OfertaCocheListView.as_view(), name='listar_ofertasCoche'),  # Ruta para listar ofertas de coches
     path('ofertasCoche/<int:pk>/', OfertaCocheDetailView.as_view(), name='show_ofertaCoche'),  # Detalles de una oferta de coche
     path('ofertasDestacadas/', OfertaDestacadaListView.as_view(), name='listar_ofertas_destacadas'),  # Ruta para listar ofertas destacadas
+    path('citas/nueva/<int:oferta_id>/', ConcertarCitaView.as_view(), name='nueva_cita'),
+
 ]

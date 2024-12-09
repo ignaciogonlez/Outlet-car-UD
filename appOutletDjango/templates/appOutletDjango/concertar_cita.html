@@ -1,0 +1,15 @@
+{% extends 'appOutletDjango/base.html' %}
+
+{% block title %}Concertar Cita{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="text-center text-primary mb-4">Concertar Cita</h1>
+    <form method="post" class="form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success">Enviar</button>
+    </form>
+    <a href="{% url 'listar_ofertasCoche' %}" class="btn btn-secondary mt-4">Volver a las Ofertas</a>
+</div>
+{% endblock %}

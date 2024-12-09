@@ -11,13 +11,21 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">{{ oferta.coche.marca.nombre }} {{ oferta.coche.modelo }} ({{ oferta.coche.anio }})</h5>
-                    <!-- Botones posicionados correctamente sin ocupar toda la línea -->
+                    
+                    <!-- Botón para concertar cita -->
+                    <div>
+                        <a href="{% url 'nueva_cita' oferta.id %}" class="btn btn-warning mb-3">Concertar Cita</a>
+                    </div>
+                    
+                    <!-- Botones existentes -->
                     <div>
                         <a href="{% url 'show_ofertaCoche' oferta.id %}" class="btn btn-primary mb-2">Ver Detalles</a>
                     </div>
                     <div>
                         <button class="btn btn-info toggle-details">Desplegar Detalles</button>
                     </div>
+                    
+                    <!-- Detalles ocultos -->
                     <div class="detalles-coche mt-3" style="display: none;">
                         <p><strong>Precio:</strong> {{ oferta.precio }} €</p>
                         {% if oferta.descuento %}
